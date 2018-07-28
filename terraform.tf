@@ -8,7 +8,7 @@ variable "REST_API_ID" {}
 variable "PARENT_ID" {}
 variable "AWS_ACCESS_KEY" {}
 variable "AWS_SECRET_ACCESS_KEY" {}
-variable "FORTNITE_TRN_API_KEY" {}
+variable "API_KEY" {}
 
 data "aws_iam_role" "role" {
   name = "apis-for-all-service-account"
@@ -38,7 +38,7 @@ resource "aws_lambda_function" "league-of-legends-api-function" {
 
   environment {
     variables {
-      league-of-legends_TRY_API_KEY = "${var.FORTNITE_TRN_API_KEY}"
+      API_KEY = "${var.API_KEY}"
     }
   }
 }
