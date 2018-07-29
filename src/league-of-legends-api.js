@@ -69,13 +69,29 @@ exports.handler = (event, context) => {
                 results = JSON.parse(na);
             } else {
                 region = 'na1';
-                results = JSON.parse(na1);
+                if(na1 !== undefined){
+                    results = JSON.parse(na1);
+                }
             }
         } else {
             region = event.body.region;
-            results = JSON.parse(rest);
+            if(rest !== undefined){
+                results = JSON.parse(rest);
+            }
         }
-        
+        if(results === ''){
+            let errObject = {message: 'Player not found in region: ' + event.body.region};
+            return context.succeed({
+                statusCode: 200,
+                body: JSON.stringify(errObject),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Methods': 'POST',
+                    'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,XAmz-Security-Token',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
         let promises = [];
         let options = {
             url: 'https://' + region + '.api.riotgames.com/lol/match/v3/matchlists/by-account/' + results.accountId + '?api_key=' + process.env.API_KEY
