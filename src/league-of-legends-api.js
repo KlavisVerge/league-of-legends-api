@@ -63,7 +63,7 @@ exports.handler = (event, context) => {
         const [na, na1, rest, realms] = responses;
         let region = '';
         let results = '';
-        if(event.body.region === 'NA'){
+        if(event.body.region === 'na'){
             if(na !== undefined){
                 region = 'na';
                 results = JSON.parse(na);
