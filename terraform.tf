@@ -32,12 +32,12 @@ resource "aws_lambda_function" "league-of-legends-api-function" {
 
   role             = "${data.aws_iam_role.role.arn}"
   handler          = "src/league-of-legends-api.handler"
-  source_code_hash = "${base64sha256(file("league-of-legends-api.zip"))}"
+  source_code_hash = "${filebase64sha256("league-of-legends-api.zip")}"
   runtime          = "nodejs6.10"
   timeout          = 20
 
   environment {
-    variables {
+    variables = {
       API_KEY = "${var.API_KEY}"
     }
   }
